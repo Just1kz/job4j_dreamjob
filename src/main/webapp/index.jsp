@@ -33,6 +33,8 @@
             <% for (Post post : Store.instOf().findAll()) { %>
             <tr>
                 <td><%= post.getName() %></td>
+                <td><%= post.getDescription() %></td>
+                <td><%= post.getCreated() %></td>
             </tr>
             <% } %>
             </tbody>

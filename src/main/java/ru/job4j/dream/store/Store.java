@@ -12,9 +12,9 @@ public class Store {
     private Map<Integer, Post> posts = new ConcurrentHashMap<>();
 
     private Store() {
-        posts.put(1, new Post(1, "Junior Java Job"));
-        posts.put(2, new Post(2, "Middle Java Job"));
-        posts.put(3, new Post(3, "Senior Java Job"));
+        posts.put(1, new Post(1, "Junior Java Job", "test1"));
+        posts.put(2, new Post(2, "Middle Java Job", "test1"));
+        posts.put(3, new Post(3, "Senior Java Job", "test1"));
     }
 
     public static Store instOf() {
