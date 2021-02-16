@@ -10,6 +10,7 @@ public class Post {
     private String name;
     private String description;
     private final Date created = new Date();
+    private final String date = changeFormatDate();
 
     public Post(int id, String name, String description) {
         this.id = id;
@@ -48,6 +49,10 @@ public class Post {
 
     public Date getCreated() {
         return created;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     @Override
