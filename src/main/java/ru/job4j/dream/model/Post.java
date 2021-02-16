@@ -1,18 +1,25 @@
 package ru.job4j.dream.model;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class Post {
     private int id;
     private String name;
     private String description;
-    private final LocalDateTime created = LocalDateTime.now();
+    private final Date created = new Date();
 
     public Post(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public String changeFormatDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss  dd.MM.yyyy");
+        return dateFormat.format(created);
     }
 
     public int getId() {
@@ -39,7 +46,7 @@ public class Post {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public Date getCreated() {
         return created;
     }
 
