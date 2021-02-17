@@ -18,6 +18,9 @@ public class Post {
         this.description = description;
     }
 
+    public Post() {
+    }
+
     public String changeFormatDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss  dd.MM.yyyy");
         return dateFormat.format(created);
@@ -70,5 +73,24 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{"
+                + "id="
+                + id
+                + ", name='"
+                + name
+                + '\''
+                + ", description='"
+                + description
+                + '\''
+                + ", created="
+                + created
+                + ", date='"
+                + date
+                + '\''
+                + '}';
     }
 }
