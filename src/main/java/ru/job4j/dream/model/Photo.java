@@ -1,0 +1,61 @@
+package ru.job4j.dream.model;
+
+import java.util.Objects;
+
+public class Photo {
+    private int id;
+    private String title;
+
+    public Photo() {
+    }
+
+    public Photo(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Photo photo = (Photo) o;
+        return id == photo.id
+                && Objects.equals(title, photo.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title);
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{"
+                + "id="
+                + id
+                + ", title='"
+                + title
+                + '\''
+                + '}';
+    }
+}

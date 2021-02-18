@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
 
 import java.util.Collection;
@@ -21,9 +22,9 @@ public class MemStore {
         posts.put(1, new Post(1, "Junior Java Job", "test1"));
         posts.put(2, new Post(2, "Middle Java Job", "test1"));
         posts.put(3, new Post(3, "Senior Java Job", "test1"));
-        candidates.put(1, new Candidate(1, "Junior Java"));
-        candidates.put(2, new Candidate(2, "Middle Java"));
-        candidates.put(3, new Candidate(3, "Senior Java"));
+        candidates.put(1, new Candidate(1, "Junior Java", new Photo(0, "DSC_1827.jpg")));
+        candidates.put(2, new Candidate(2, "Middle Java", new Photo(0, "DSC_1827.jpg")));
+        candidates.put(3, new Candidate(3, "Senior Java", new Photo(0, "DSC_1827.jpg")));
     }
 
     public static MemStore instOf() {

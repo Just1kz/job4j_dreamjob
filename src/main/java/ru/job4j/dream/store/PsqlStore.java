@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
 
 import java.io.BufferedReader;
@@ -72,11 +73,12 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate")
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(it.getInt("idC"), it.getString("name"),
+                            new Photo(it.getInt("idP"), it.getString("title"))));
                 }
             }
         } catch (Exception e) {
@@ -138,9 +140,10 @@ public class PsqlStore implements Store {
     @Override
     public Candidate createCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, photo_id) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getPhoto().getId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -157,9 +160,10 @@ public class PsqlStore implements Store {
     public Candidate updateCandidate(Candidate candidate) {
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "update candidate set name = ? where id = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "update candidate set name = ?, photo_id = ? where idC = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getId());
+            ps.setInt(2, candidate.getPhoto().getId());
+            ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -193,13 +197,12 @@ public class PsqlStore implements Store {
         Candidate candidate = null;
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "select * from candidate where id = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id where t1.idC = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    candidate = new Candidate(
-                            Integer.parseInt(rs.getString("id")),
-                            rs.getString("name"));
+                    candidate = new Candidate(rs.getInt("idC"), rs.getString("name"),
+                            new Photo(rs.getInt("idP"), rs.getString("title")));
                 }
             }
         } catch (Exception e) {
@@ -229,6 +232,73 @@ public class PsqlStore implements Store {
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
                      "delete from candidate where id = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, id);
+            ps.execute();
+            rsl = true;
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return rsl;
+    }
+
+    @Override
+    public Photo findPhotoById(int id) {
+        Photo photo = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("select * from photo where idP = ?")) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                photo = new Photo(
+                        rs.getInt(1),
+                        rs.getString("title")
+                );
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return photo;
+    }
+
+    @Override
+    public Photo createPhoto(Photo photo) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO photo(title) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, photo.getTitle());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    photo.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return photo;
+    }
+
+    @Override
+    public List<String> findAllNamePhoto() {
+        List<String> photo = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("select title from photo;")) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    photo.add(it.getString("title"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return photo;
+    }
+
+    @Override
+    public boolean deletePhoto(int id) {
+        boolean rsl = false;
+        try (Connection connection = pool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "delete from photo where idP = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, id);
             ps.execute();
             rsl = true;

@@ -2,6 +2,7 @@
 <%@ page import="ru.job4j.dream.model.Post" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
+<%@ page import="ru.job4j.dream.model.Photo" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,9 +34,15 @@
 </div>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "", new Photo(0,""));
     if (id != null) {
         candidate = PsqlStore.instOf().findByIdCandidate(Integer.parseInt(id));
+    }
+%>
+<%
+    String photo_id = (String) request.getAttribute("id");
+    if (photo_id == null && candidate.getId() > 0) {
+        photo_id = String.valueOf(candidate.getPhoto().getId());
     }
 %>
 <div class="container pt-3">
@@ -43,7 +50,11 @@
         <div class="card" style="width: 100%">
             <div class="card-header">
                 <% if (id == null) { %>
+                <% if (photo_id == null) { %>
+                <a href='<c:redirect url="/upload"/>'></a>
+                <% } else { %>
                 Новый кандидат.
+                <% } %>
                 <% } else { %>
                 Редактирование кандидата.
                 <% } %>
@@ -53,6 +64,10 @@
                     <div class="form-group">
                         <label>Имя</label>
                         <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                    </div>
+                    <div class="form-group">
+                        <label>Фото</label>
+                        <input type="text" class="form-control" name="title" value="<%=candidate.getPhoto().getTitle()%>">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

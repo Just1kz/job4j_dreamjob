@@ -51,4 +51,30 @@
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+
+<!--  <context-param>-->
+<!--    <description>Location to store uploaded file</description>-->
+<!--    <param-name>file-upload</param-name>-->
+<!--    <param-value>-->
+<!--      C:\Tools\apache-tomcat-9.0.43\webapps\data-->
+<!--    </param-value>-->
+<!--  </context-param>-->
+
+  <servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/download</url-pattern>
+  </servlet-mapping>
+
 </web-app>
