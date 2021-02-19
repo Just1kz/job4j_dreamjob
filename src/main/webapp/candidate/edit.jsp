@@ -34,15 +34,15 @@
 </div>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "", new Photo(0,""));
+    Candidate candidate = new Candidate(0, "", new Photo(0));
     if (id != null) {
         candidate = PsqlStore.instOf().findByIdCandidate(Integer.parseInt(id));
     }
 %>
 <%
-    String photo_id = (String) request.getAttribute("id");
+    String photo_id = (String) request.getAttribute("idP");
     if (photo_id == null && candidate.getId() > 0) {
-        photo_id = String.valueOf(candidate.getPhoto().getId());
+        photo_id = String.valueOf(candidate.getPhoto().getIdP());
     }
 %>
 <div class="container pt-3">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label>Фото</label>
-                        <input type="text" class="form-control" name="title" value="<%=candidate.getPhoto().getTitle()%>">
+                        <input type="text" class="form-control" name="idP" value="<%=candidate.getPhoto().getIdP()%>">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

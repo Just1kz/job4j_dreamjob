@@ -58,7 +58,7 @@ public class UploadServlet extends HttpServlet {
         } catch (FileUploadException e) {
             e.printStackTrace();
         }
-        req.setAttribute("photo_id", String.valueOf(result.getId()));
+        req.setAttribute("photo_id", String.valueOf(result.getIdP()));
         doGet(req, resp);
     }
 }

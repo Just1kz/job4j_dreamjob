@@ -204,3 +204,19 @@
   Подробности: Ключ (photo_id)=(0) отсутствует в таблице "photo".
 2021-02-19 04:42:39 ERROR PsqlStore:154 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
   Подробности: Ключ (photo_id)=(0) отсутствует в таблице "photo".
+2021-02-19 10:31:41 ERROR PsqlStore:169 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(7) отсутствует в таблице "photo".
+2021-02-19 10:32:01 ERROR PsqlStore:169 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(7) отсутствует в таблице "photo".
+2021-02-19 10:32:10 ERROR PsqlStore:154 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(0) отсутствует в таблице "photo".
+2021-02-19 10:37:31 ERROR PsqlStore:154 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(0) отсутствует в таблице "photo".
+2021-02-19 14:18:44 ERROR PsqlStore:169 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(7) отсутствует в таблице "photo".
+2021-02-19 14:30:07 ERROR PsqlStore:169 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(6) отсутствует в таблице "photo".
+2021-02-19 14:42:36 ERROR PsqlStore:169 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(6) отсутствует в таблице "photo".
+2021-02-19 14:42:47 ERROR PsqlStore:154 - ОШИБКА: INSERT или UPDATE в таблице "candidate" нарушает ограничение внешнего ключа "candidate_photo_id_fkey"
+  Подробности: Ключ (photo_id)=(0) отсутствует в таблице "photo".

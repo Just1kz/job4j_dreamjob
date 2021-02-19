@@ -32,7 +32,7 @@ public class PsqlMain {
 //            System.out.println(candidate.getId() + " " + candidate.getName() + " "+ candidate.getPhoto().getTitle());
 //        }
         System.out.println("");
-        store.updateCandidate(new Candidate(6, "La-La", new Photo(1, "123")));
+        store.updateCandidate(new Candidate(6, "La-La", new Photo(1)));
         for (Candidate candidate : store.findAllCandidates()) {
             System.out.println(candidate.getId() + " " + candidate.getName() + " " + candidate.getPhoto().getTitle());
         }

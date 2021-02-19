@@ -26,4 +26,8 @@ insert into candidate(name, photo_id) VALUES ('Senior Java', 1);
 
 SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id;
 
+update candidate set name = 'La-La-Da', photo_id = 2 where idC = 6;
+SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id where t1.idC = 6;
+
+
 INSERT INTO candidate(name, photo_id) VALUES ('Anton', 1);

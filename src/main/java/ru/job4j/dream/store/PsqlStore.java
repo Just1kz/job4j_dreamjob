@@ -143,7 +143,7 @@ public class PsqlStore implements Store {
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, photo_id) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getPhoto().getId());
+            ps.setInt(2, candidate.getPhoto().getIdP());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -162,7 +162,7 @@ public class PsqlStore implements Store {
              PreparedStatement ps = connection.prepareStatement(
                      "update candidate set name = ?, photo_id = ? where idC = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getPhoto().getId());
+            ps.setInt(2, candidate.getPhoto().getIdP());
             ps.setInt(3, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
@@ -268,7 +268,7 @@ public class PsqlStore implements Store {
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
-                    photo.setId(id.getInt(1));
+                    photo.setIdP(id.getInt(1));
                 }
             }
         } catch (Exception e) {

@@ -3,23 +3,27 @@ package ru.job4j.dream.model;
 import java.util.Objects;
 
 public class Photo {
-    private int id;
+    private int idP;
     private String title;
 
     public Photo() {
     }
 
+    public Photo(int id) {
+        this.idP = id;
+    }
+
     public Photo(int id, String title) {
-        this.id = id;
+        this.idP = id;
         this.title = title;
     }
 
-    public int getId() {
-        return id;
+    public int getIdP() {
+        return idP;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdP(int idP) {
+        this.idP = idP;
     }
 
     public String getTitle() {
@@ -39,20 +43,20 @@ public class Photo {
             return false;
         }
         Photo photo = (Photo) o;
-        return id == photo.id
+        return idP == photo.idP
                 && Objects.equals(title, photo.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title);
+        return Objects.hash(idP, title);
     }
 
     @Override
     public String toString() {
         return "Photo{"
                 + "id="
-                + id
+                + idP
                 + ", title='"
                 + title
                 + '\''
