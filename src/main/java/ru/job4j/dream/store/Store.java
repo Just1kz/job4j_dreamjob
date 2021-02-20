@@ -48,5 +48,7 @@ public interface Store {
 
     User findByIdUser(int id);
 
+    User findByEmailUser(String email);
+
     Collection<User> findAllUsers();
 }
