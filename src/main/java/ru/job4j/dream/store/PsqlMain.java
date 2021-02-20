@@ -3,6 +3,7 @@ package ru.job4j.dream.store;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.sql.SQLException;
 
@@ -31,11 +32,11 @@ public class PsqlMain {
 //        for (Candidate candidate : store.findAllCandidates()) {
 //            System.out.println(candidate.getId() + " " + candidate.getName() + " "+ candidate.getPhoto().getTitle());
 //        }
-        System.out.println("");
-        store.updateCandidate(new Candidate(6, "La-La", new Photo(1)));
-        for (Candidate candidate : store.findAllCandidates()) {
-            System.out.println(candidate.getId() + " " + candidate.getName() + " " + candidate.getPhoto().getTitle());
-        }
+//        System.out.println("");
+//        store.updateCandidate(new Candidate(6, "La-La", new Photo(1)));
+//        for (Candidate candidate : store.findAllCandidates()) {
+//            System.out.println(candidate.getId() + " " + candidate.getName() + " " + candidate.getPhoto().getTitle());
+//        }
 //        System.out.println("");
 //        System.out.println(store.findByIdPost(5));
 
@@ -65,5 +66,20 @@ public class PsqlMain {
 //
 //        System.out.println(store.findPhotoById(2));
 
+        store.createUser(new User(1, "Anton", "Anton@mail.ru", "123"));
+        store.createUser(new User(2, "Anna", "Anna@mail.ru", "123"));
+        store.createUser(new User(3, "Petr", "Petr@mail.ru", "123"));
+
+        for (User user : store.findAllUsers()) {
+            System.out.println(user.getIdU() + " " + user.getName() + " " + user.getEmail() + " " + user.getPassword());
+        }
+
+        store.updateUser(new User(1, "Anton", "Anton@mail.ru", "job4j_4rever"));
+
+        for (User user : store.findAllUsers()) {
+            System.out.println(user.getIdU() + " " + user.getName() + " " + user.getEmail() + " " + user.getPassword());
+        }
+        System.out.println("");
+        System.out.println(store.findByIdUser(3));
     }
 }

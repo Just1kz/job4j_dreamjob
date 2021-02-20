@@ -3,6 +3,7 @@ package ru.job4j.dream.store;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -40,4 +41,12 @@ public interface Store {
     List<String> findAllNamePhoto();
 
     boolean deletePhoto(int id);
+
+    User createUser(User user);
+
+    boolean updateUser(User user);
+
+    User findByIdUser(int id);
+
+    Collection<User> findAllUsers();
 }

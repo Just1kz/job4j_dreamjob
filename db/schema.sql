@@ -1,3 +1,10 @@
+CREATE TABLE if not exists users(
+                                   idU SERIAL PRIMARY KEY,
+                                   name text,
+                                   email text,
+                                   password text
+);
+
 CREATE TABLE if not exists post(
                       id SERIAL PRIMARY KEY,
                       name text,

@@ -8,6 +8,16 @@ public class User {
     private String email;
     private String password;
 
+    public User(int idU, String name, String email, String password) {
+        this.idU = idU;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
     public int getIdU() {
         return idU;
     }
@@ -55,5 +65,22 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(idU);
+    }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "idU="
+                + idU
+                + ", name='"
+                + name
+                + '\''
+                + ", email='"
+                + email
+                + '\''
+                + ", password='"
+                + password
+                + '\''
+                + '}';
     }
 }
