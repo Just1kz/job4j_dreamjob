@@ -49,12 +49,8 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                <% if (id == null) { %>
-                <% if (photo_id == null) { %>
-                <a href='<c:redirect url="/upload"/>'></a>
-                <% } else { %>
+                <% if (id == null && photo_id == null) { %>
                 Новый кандидат.
-                <% } %>
                 <% } else { %>
                 Редактирование кандидата.
                 <% } %>
