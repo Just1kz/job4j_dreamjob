@@ -410,4 +410,9 @@ public class PsqlStore implements Store {
         }
         return users;
     }
+
+    @Override
+    public int size() {
+        return 0;
+    }
 }

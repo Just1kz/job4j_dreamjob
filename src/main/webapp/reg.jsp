@@ -38,6 +38,15 @@
             <div class="card-header">
                 Регистрация
             </div>
+            <div class="container">
+                <div class="row">
+                    <c:if test="${not empty error}">
+                        <div style="color:red; font-weight: bold; margin: 30px 0;">
+                                ${error}
+                        </div>
+                    </c:if>
+                </div>
+            </div>
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">

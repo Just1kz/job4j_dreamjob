@@ -51,4 +51,6 @@ public interface Store {
     User findByEmailUser(String email);
 
     Collection<User> findAllUsers();
+
+    public int size();
 }

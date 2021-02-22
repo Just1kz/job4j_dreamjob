@@ -3,13 +3,15 @@ package ru.job4j.dream.store;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MemStore {
+public class MemStore implements Store {
     private static final MemStore INST = new MemStore();
     private static final AtomicInteger POST_ID = new AtomicInteger(4);
     private static final AtomicInteger CANDIDATE_ID = new AtomicInteger(4);
@@ -46,6 +48,25 @@ public class MemStore {
         posts.put(post.getId(), post);
     }
 
+    public int size() {
+        return posts.size();
+    }
+
+    @Override
+    public Post createPost(Post post) {
+        if (post.getId() == 0) {
+            post.setId(POST_ID.incrementAndGet());
+        }
+        posts.put(post.getId(), post);
+        return post;
+    }
+
+    @Override
+    public Post updatePost(Post post) {
+        posts.put(post.getId(), post);
+        return post;
+    }
+
     public Post findByIdPost(int id) {
         return posts.get(id);
     }
@@ -57,7 +78,72 @@ public class MemStore {
         candidates.put(candidate.getId(), candidate);
     }
 
+    @Override
+    public Candidate createCandidate(Candidate candidate) {
+        return null;
+    }
+
+    @Override
+    public Candidate updateCandidate(Candidate candidate) {
+        return null;
+    }
+
     public Candidate findByIdCandidate(int id) {
         return candidates.get(id);
+    }
+
+    @Override
+    public boolean deletePost(int id) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteCandidate(int id) {
+        return false;
+    }
+
+    @Override
+    public Photo findPhotoById(int id) {
+        return null;
+    }
+
+    @Override
+    public Photo createPhoto(Photo photo) {
+        return null;
+    }
+
+    @Override
+    public List<String> findAllNamePhoto() {
+        return null;
+    }
+
+    @Override
+    public boolean deletePhoto(int id) {
+        return false;
+    }
+
+    @Override
+    public User createUser(User user) {
+        return null;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return false;
+    }
+
+    @Override
+    public User findByIdUser(int id) {
+        return null;
+    }
+
+    @Override
+    public User findByEmailUser(String email) {
+        return null;
+    }
+
+    @Override
+    public Collection<User> findAllUsers() {
+        return null;
     }
 }
