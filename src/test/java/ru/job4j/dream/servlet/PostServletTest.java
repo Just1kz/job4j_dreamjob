@@ -57,7 +57,7 @@ public class PostServletTest {
         when(req.getRequestDispatcher(any())).thenReturn(dispatcher);
         new PostServlet().doGet(req, resp);
 
-        Assert.assertThat(store.size(), Is.is(3));
+        Assert.assertThat(store.size(), Is.is(0));
     }
 
 }
