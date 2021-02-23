@@ -20,6 +20,23 @@
 
     <title>Работа мечты</title>
 </head>
+<script>
+    function validate() {
+        let fields = [$("#eml"), $("#psw")];
+        let result = true;
+        let answer = '';
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].val() === "") {
+                answer += fields[i].attr("placeholder") + "\n";
+                result = false;
+            }
+        }
+        if (!result) {
+            alert(answer);
+        }
+        return result;
+    }
+</script>
 <body>
 <div class="container">
     <div class="row">
@@ -44,13 +61,13 @@
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" id="eml" placeholder="Введите Почту">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="text" class="form-control" name="password" id="psw" placeholder="Введите Пароль">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Войти</button>
                 </form>
             </div>
         </div>

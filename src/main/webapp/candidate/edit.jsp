@@ -22,6 +22,23 @@
 
     <title>Работа мечты</title>
 </head>
+<script>
+    function validate() {
+        let fields = [$("#name"), $("#idP")];
+        let result = true;
+        let answer = '';
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].val() === "") {
+                answer += fields[i].attr("placeholder") + "\n";
+                result = false;
+            }
+        }
+        if (!result) {
+            alert(answer);
+        }
+        return result;
+    }
+</script>
 <body>
 <div class="container">
     <div class="row">
@@ -59,13 +76,13 @@
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Введите Имя" value="<%=candidate.getName()%>">
                     </div>
                     <div class="form-group">
                         <label>Фото</label>
-                        <input type="text" class="form-control" name="idP" value="<%=candidate.getPhoto().getIdP()%>">
+                        <input type="text" class="form-control" name="idP" id="idP" placeholder="Введите Id Фото в БД" value="<%=candidate.getPhoto().getIdP()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

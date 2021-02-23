@@ -20,6 +20,23 @@
 
     <title>Работа мечты</title>
 </head>
+<script>
+    function validate() {
+        let fields = [$("#name"), $("#desc")];
+        let result = true;
+        let answer = '';
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].val() === "") {
+                answer += fields[i].attr("placeholder") + "\n";
+                result = false;
+            }
+        }
+        if (!result) {
+            alert(answer);
+        }
+        return result;
+    }
+</script>
 <body>
 <div class="container">
     <div class="row">
@@ -51,39 +68,17 @@
                 <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Введите Имя" value="<%=post.getName()%>">
                     </div>
                     <div class="form-group">
                         <label>Расшифровка</label>
-                        <input type="text" class="form-control" name="description" value="<%=post.getDescription()%>">
+                        <input type="text" class="form-control" name="description" id="desc" placeholder="Введите Расшифровку" value="<%=post.getDescription()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<%--<div class="container pt-3">--%>
-<%--    <div class="row">--%>
-<%--        <div class="card" style="width: 100%">--%>
-<%--            <div class="card-header">--%>
-<%--                Новая вакансия.--%>
-<%--            </div>--%>
-<%--            <div class="card-body">--%>
-<%--                <form  action="<%=request.getContextPath()%>/post/save" method="post">--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Имя</label>--%>
-<%--                        <input type="text" class="form-control" name="name">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Детали Вакансии</label>--%>
-<%--                        <input type="text" class="form-control" name="description">--%>
-<%--                    </div>--%>
-<%--                    <button type="submit" class="btn btn-primary">Сохранить</button>--%>
-<%--                </form>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 </body>
 </html>
