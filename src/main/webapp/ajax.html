@@ -17,15 +17,21 @@
 <script>
     function sendGreeting() {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             crossdomain: true,
             url: 'http://localhost:8090/dreamjob/greet',
-            data: 'name=' + $('#exampleInputEmail1').val(),
-            dataType: 'text'
+            data: JSON.stringify({
+                name: $('#exampleInputEmail1').val()
+            }),
+            contentType: 'application/json',
+            dataType: 'json'
         }).done(function(data) {
-            alert(data);
+            console.log(data.name);
+            $('input').before(
+                '<p>' + data.name +
+                '</p>')
         }).fail(function(err){
-            alert(err);
+            console.log(err);
         });
     }
 </script>
