@@ -1,9 +1,6 @@
 package ru.job4j.dream.store;
 
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.Photo;
-import ru.job4j.dream.model.Post;
-import ru.job4j.dream.model.User;
+import ru.job4j.dream.model.*;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -53,4 +50,7 @@ public interface Store {
     Collection<User> findAllUsers();
 
     public int size();
+
+    Collection<City> findAllTowns();
+    Collection<String> findAllTownsName();
 }

@@ -10,12 +10,19 @@ public class Post {
     private String name;
     private String description;
     private final Date created = new Date();
-    private final String date = changeFormatDate();
+    private String date = changeFormatDate();
 
     public Post(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Post(int id, String name, String description, String date) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.date = date;
     }
 
     public Post() {

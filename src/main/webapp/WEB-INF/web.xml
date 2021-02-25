@@ -105,4 +105,13 @@
     <url-pattern>/greet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>TownServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.TownServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TownServlet</servlet-name>
+    <url-pattern>/towns</url-pattern>
+  </servlet-mapping>
+
 </web-app>
