@@ -51,8 +51,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Город</th>
                         <th scope="col">Резюме</th>
+                        <th scope="col">Дата создания</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -67,14 +69,22 @@
                             <td>
                                     <tr>
                                         <td>
-                                            <img src="<c:url value='/download?name=${candidate.photo.title}'/>" width="100px" height="100px"/>
+                                            <img src="<c:url value='/download?name=${candidate.photo.title}'/>" width="200px" height="150px"/>
+                                        </td>
+                                        <td>
+                                            <c:out value="${candidate.city.town}"/>
+                                        </td>
+                                        <td>
+                                            <c:out value="${candidate.resume}"/>
+                                        </td>
+                                        <td>
+                                            <c:out value="${candidate.date}"/>
                                         </td>
                                     </tr>
                                         <td>
                                             <a href="<c:url value='/download?name=${candidate.photo.title}'/>">Скачать Фото</a>
                                         </td>
                             </td>
-
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -3,10 +3,7 @@ package ru.job4j.dream.store;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.Photo;
-import ru.job4j.dream.model.Post;
-import ru.job4j.dream.model.User;
+import ru.job4j.dream.model.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -61,7 +58,11 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name"), it.getString("description")));
+                    posts.add(new Post(
+                            it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getString("createDate")));
                 }
             }
         } catch (Exception e) {
@@ -74,12 +75,26 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id")
+             PreparedStatement ps =  cn.prepareStatement(
+                     "SELECT * FROM candidate t1 "
+                             + "left join photo t2 on t2.idP = t1.photo_id "
+                             + "left join city t3 on t3.town = t1.town_name")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("idC"), it.getString("name"),
-                            new Photo(it.getInt("idP"), it.getString("title"))));
+                    candidates.add(
+                            new Candidate(
+                                it.getInt("idCan"),
+                                it.getString("name"),
+                                new City(
+                                        it.getInt("idCity"),
+                                        it.getString("town")
+                                ),
+                                it.getString("resume"),
+                                new Photo(
+                                        it.getInt("idP"),
+                                        it.getString("title")),
+                                it.getString("createDate")));
                 }
             }
         } catch (Exception e) {
@@ -99,10 +114,11 @@ public class PsqlStore implements Store {
 
     public Post createPost(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name, description) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name, description, createDate) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
+            ps.setString(3, post.getDate());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -118,10 +134,11 @@ public class PsqlStore implements Store {
     public Post updatePost(Post post) {
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "update post set name = ?, description = ? where id = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "update post set name = ?, description = ?, createDate = ? where id = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
-            ps.setInt(3, post.getId());
+            ps.setString(3, post.getDate());
+            ps.setInt(4, post.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -141,10 +158,14 @@ public class PsqlStore implements Store {
     @Override
     public Candidate createCandidate(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, photo_id) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name, town_name, resume, photo_id, createDate) "
+                     + "VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getPhoto().getIdP());
+            ps.setString(2, candidate.getCity().getTown());
+            ps.setString(3, candidate.getResume());
+            ps.setInt(4, candidate.getPhoto().getIdP());
+            ps.setString(5, candidate.getDate());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -161,10 +182,13 @@ public class PsqlStore implements Store {
     public Candidate updateCandidate(Candidate candidate) {
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "update candidate set name = ?, photo_id = ? where idC = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "update candidate set name = ?, town_name = ?, resume = ?, photo_id = ?, createDate = ? where idCan = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getPhoto().getIdP());
-            ps.setInt(3, candidate.getId());
+            ps.setString(2, candidate.getCity().getTown());
+            ps.setString(3, candidate.getResume());
+            ps.setInt(4, candidate.getPhoto().getIdP());
+            ps.setString(5, candidate.getDate());
+            ps.setInt(6, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -182,9 +206,10 @@ public class PsqlStore implements Store {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     post = new Post(
-                            Integer.parseInt(rs.getString("id")),
+                            rs.getInt("id"),
                             rs.getString("name"),
-                            rs.getString("description"));
+                            rs.getString("description"),
+                            rs.getString("createDate"));
                 }
             }
         } catch (Exception e) {
@@ -198,12 +223,24 @@ public class PsqlStore implements Store {
         Candidate candidate = null;
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id where t1.idC = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "SELECT * FROM candidate t1 "
+                             + "left join photo t2 on t2.idP = t1.photo_id "
+                             + "left join city t3 on t3.town = t1.town_name where t1.idCan = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    candidate = new Candidate(rs.getInt("idC"), rs.getString("name"),
-                            new Photo(rs.getInt("idP"), rs.getString("title")));
+                    candidate = new Candidate(
+                            rs.getInt("idCan"),
+                            rs.getString("name"),
+                            new City(
+                                    rs.getInt("idCity"),
+                                    rs.getString("town")
+                            ),
+                            rs.getString("resume"),
+                            new Photo(
+                                    rs.getInt("idP"),
+                                    rs.getString("title")),
+                            rs.getString("createDate"));
                 }
             }
         } catch (Exception e) {
@@ -232,7 +269,7 @@ public class PsqlStore implements Store {
         boolean rsl = false;
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "delete from candidate where id = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "delete from candidate where idCan = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, id);
             ps.execute();
             rsl = true;
@@ -414,5 +451,40 @@ public class PsqlStore implements Store {
     @Override
     public int size() {
         return 0;
+    }
+
+    @Override
+    public Collection<City> findAllTowns() {
+        List<City> towns = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM city")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    towns.add(new City(
+                            it.getInt("idCity"),
+                            it.getString("town")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return towns;
+    }
+    public Collection<String> findAllTownsName() {
+        List<String> towns = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT town FROM city")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    towns.add(
+                            it.getString("town"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+        return towns;
     }
 }

@@ -1,9 +1,6 @@
 package ru.job4j.dream.store;
 
-import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.Photo;
-import ru.job4j.dream.model.Post;
-import ru.job4j.dream.model.User;
+import ru.job4j.dream.model.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,9 +21,9 @@ public class MemStore implements Store {
 //        posts.put(1, new Post(1, "Junior Java Job", "test1"));
 //        posts.put(2, new Post(2, "Middle Java Job", "test1"));
 //        posts.put(3, new Post(3, "Senior Java Job", "test1"));
-        candidates.put(1, new Candidate(1, "Junior Java", new Photo(0, "DSC_1827.jpg")));
-        candidates.put(2, new Candidate(2, "Middle Java", new Photo(0, "DSC_1827.jpg")));
-        candidates.put(3, new Candidate(3, "Senior Java", new Photo(0, "DSC_1827.jpg")));
+        candidates.put(1, new Candidate(1, "Junior Java", new City(1, "Novosibirsk"), "bla-bla", new Photo(0, "DSC_1827.jpg")));
+        candidates.put(2, new Candidate(2, "Middle Java",  new City(1, "Novosibirsk"), "bla-bla", new Photo(0, "DSC_1827.jpg")));
+        candidates.put(3, new Candidate(3, "Senior Java",  new City(1, "Novosibirsk"), "bla-bla", new Photo(0, "DSC_1827.jpg")));
     }
 
     public static MemStore instOf() {
@@ -50,6 +47,16 @@ public class MemStore implements Store {
 
     public int size() {
         return posts.size();
+    }
+
+    @Override
+    public Collection<City> findAllTowns() {
+        return null;
+    }
+
+    @Override
+    public Collection<String> findAllTownsName() {
+        return null;
     }
 
     @Override

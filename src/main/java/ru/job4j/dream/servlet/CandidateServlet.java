@@ -1,6 +1,7 @@
 package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Photo;
 import ru.job4j.dream.store.PsqlStore;
 
@@ -19,8 +20,22 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        PsqlStore.instOf().saveCandidate(new Candidate(Integer.parseInt(req.getParameter("id")), req.getParameter("name"),
-                new Photo(Integer.parseInt(req.getParameter("idP")), req.getParameter("title"))));
+        PsqlStore.instOf().saveCandidate(
+                new Candidate(
+                        Integer.parseInt(req.getParameter("id")),
+                        req.getParameter("name"),
+                        new City(
+//                                Integer.parseInt(req.getParameter("idCity"))
+                                req.getParameter("townX")
+                        ),
+                        req.getParameter("resume"),
+                        new Photo(
+                                Integer.parseInt(req.getParameter("idP"))
+//                                req.getParameter("title")
+                        ),
+                        req.getParameter("date")
+                )
+        );
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

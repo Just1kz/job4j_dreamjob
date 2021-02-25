@@ -22,7 +22,7 @@
 </head>
 <script>
     function validate() {
-        let fields = [$("#name"), $("#desc")];
+        let fields = [$("#name"), $("#desc"), $("#date")];
         let result = true;
         let answer = '';
         for (let i = 0; i < fields.length; i++) {
@@ -73,6 +73,10 @@
                     <div class="form-group">
                         <label>Расшифровка</label>
                         <input type="text" class="form-control" name="description" id="desc" placeholder="Введите Расшифровку" value="<%=post.getDescription()%>">
+                    </div>
+                    <div class="form-group">
+                        <label>Дата Создания</label>
+                        <input type="text" class="form-control" name="date" id="date" placeholder="Введите Актуальную Дату" value="<%=post.getDate()%>">
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>
