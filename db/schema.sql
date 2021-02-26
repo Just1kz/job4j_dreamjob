@@ -43,13 +43,7 @@ insert into candidate(name, town_name, resume, photo_id, createDate) VALUES ('Ju
 insert into candidate(name, town_name, resume, photo_id, createDate) VALUES ('Middle Java', 'Moscow', 'bla-bla', 2, '15:05:03  01.01.2021');
 insert into candidate(name, town_name, resume, photo_id, createDate) VALUES ('Senior Java', 'Saint-Petersburg', 'bla-bla', 2, '15:05:03  01.01.2021');
 
-SELECT * FROM candidate t1 left join photo t2 on t2.idP = t1.photo_id;
-
-update candidate set name = 'La-La-Da', photo_id = 2 where idCan = 6;
-SELECT * FROM candidate t1
-    left join photo t2 on t2.idP = t1.photo_id
-    left join city t3 on t3.town = t1.town_name
-where t1.idCan = 1;
-
-
-INSERT INTO candidate(name, photo_id) VALUES ('Anton', 1);
+SELECT *
+    FROM candidate
+        left join photo p on p.idP = candidate.photo_id
+        left join city c on c.town = candidate.town_name;

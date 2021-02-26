@@ -9,6 +9,11 @@ Technologies:
 - JDBC
 - Apache Tomcat
 - OOP
+- MVC Pattern
+- Mockito
+- slf4j/log4j
+- PostgreSQL
+- Travis CI / CodeCov / CheckStyle
 
 This application demonstrates a simple job placement and resume service for job search and candidate search
 

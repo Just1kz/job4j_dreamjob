@@ -76,9 +76,9 @@ public class PsqlStore implements Store {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT * FROM candidate t1 "
-                             + "left join photo t2 on t2.idP = t1.photo_id "
-                             + "left join city t3 on t3.town = t1.town_name")
+                     "SELECT * FROM candidate "
+                             + "left join photo p on p.idP = candidate.photo_id "
+                             + "left join city c on c.town = candidate.town_name")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -223,9 +223,9 @@ public class PsqlStore implements Store {
         Candidate candidate = null;
         try (Connection connection = pool.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "SELECT * FROM candidate t1 "
-                             + "left join photo t2 on t2.idP = t1.photo_id "
-                             + "left join city t3 on t3.town = t1.town_name where t1.idCan = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     "SELECT * FROM candidate "
+                             + "left join photo p on p.idP = candidate.photo_id "
+                             + "left join city c on c.town = candidate.town_name where t1.idCan = ?;", PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
