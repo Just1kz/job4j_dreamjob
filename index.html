@@ -10,11 +10,11 @@
 </head>
 <body>
 
+<div class="container-fluid">
+    <h1>My First Bootstrap Page</h1>
+    <p>This is some text.</p>
+
 <form>
-    <div class="container-fluid">
-        <h1>My First Bootstrap Page</h1>
-        <p>This is some text.</p>
-    </div>
     <div class="form-group">
         <label>First Name</label>
         <input type="text" class="form-control" placeholder="Enter First Name" name="nameFirst" id="nameFirst">
@@ -31,17 +31,46 @@
         <label>Description:</label>
         <input type="text" class="form-control"  placeholder="Enter description" name="description" id="description">
     </div>
-    <button type="submit" class="btn btn-primary" onclick="function addRow() {
-    let fields = [$('#nameFirst'), $('#nameSecond'), $('#sex'), $('#description')];
-    $('#table tr:last').after('<tr><td>' + nameFirst.value +'</td>' +
-                                                        '<td>' + nameSecond.value +'</td>' +
-                                                        '<td>' + sex.value +'</td>' +
-                                                        '<td>' + description.value +'</td>' +
-                                                        '</tr>');
-return true;
-}
-return addRow()">Add Data</button>
+    <button type="submit" class="btn btn-primary" onclick="return addRow()">Add Data</button>
 </form>
+
+</div>
+
+<script>
+
+    function addRow() {
+        let rsl = false
+        let fields = [$("#nameFirst"), $("#nameSecond"), $("#sex"), $("#description")];
+        if (validate() === true) {
+            $('#table tr:last').after('' +
+                '<tr>' +
+                '<td>' + fields[0].value +'</td>' +
+                '<td>' + fields[1].value +'</td>' +
+                '<td>' + fields[2].value +'</td>' +
+                '<td>' + fields[3].value +'</td>' +
+                '</tr>');
+            rsl = true;
+        }
+        return rsl;
+    }
+
+    function validate() {
+        let fields = [$("#nameFirst"), $("#nameSecond"), $("#sex"), $("#description")];
+        let result = true;
+        let answer = '';
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].val() === "") {
+                answer += fields[i].attr("placeholder") + "\n";
+                result = false;
+            }
+        }
+        if (!result) {
+            alert(answer);
+        }
+        return result;
+    }
+
+</script>
 
 <div class="container">
     <h2>Basic Table</h2>
