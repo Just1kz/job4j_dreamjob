@@ -13,7 +13,6 @@
 <div class="container-fluid">
     <h1>My First Bootstrap Page</h1>
     <p>This is some text.</p>
-
 <form>
     <div class="form-group">
         <label>First Name</label>
@@ -40,14 +39,16 @@
 
     function addRow() {
         let rsl = false
-        let fields = [$("#nameFirst"), $("#nameSecond"), $("#sex"), $("#description")];
+        let fields = [$('#nameSecond'), $('#description')];
+        let nameFirst = $('#nameFirst').val();
+        let sex = $('#sex').val();
         if (validate() === true) {
             $('#table tr:last').after('' +
                 '<tr>' +
-                '<td>' + fields[0].value +'</td>' +
-                '<td>' + fields[1].value +'</td>' +
-                '<td>' + fields[2].value +'</td>' +
-                '<td>' + fields[3].value +'</td>' +
+                '<td>' + nameFirst+'</td>' +
+                '<td>' + fields[0].val() +'</td>' +
+                '<td>' + sex +'</td>' +
+                '<td>' + fields[1].val() +'</td>' +
                 '</tr>');
             rsl = true;
         }
