@@ -66,7 +66,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return posts;
     }
@@ -98,7 +98,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return candidates;
     }
@@ -126,7 +126,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return post;
     }
@@ -141,7 +141,7 @@ public class PsqlStore implements Store {
             ps.setInt(4, post.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return post;
     }
@@ -173,7 +173,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return candidate;
     }
@@ -191,7 +191,7 @@ public class PsqlStore implements Store {
             ps.setInt(6, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return candidate;
     }
@@ -213,7 +213,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return post;
     }
@@ -244,7 +244,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return candidate;
     }
@@ -259,7 +259,7 @@ public class PsqlStore implements Store {
             ps.execute();
             rsl = true;
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return rsl;
     }
@@ -274,7 +274,7 @@ public class PsqlStore implements Store {
             ps.execute();
             rsl = true;
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return rsl;
     }
@@ -293,7 +293,7 @@ public class PsqlStore implements Store {
                 );
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return photo;
     }
@@ -310,7 +310,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return photo;
     }
@@ -326,7 +326,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return photo;
     }
@@ -341,7 +341,7 @@ public class PsqlStore implements Store {
             ps.execute();
             rsl = true;
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return rsl;
     }
@@ -361,7 +361,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return user;
     }
@@ -379,7 +379,7 @@ public class PsqlStore implements Store {
             ps.executeUpdate();
             rsl = true;
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return rsl;
     }
@@ -401,7 +401,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return user;
     }
@@ -423,7 +423,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return user;
     }
@@ -443,7 +443,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return users;
     }
@@ -467,7 +467,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return towns;
     }
@@ -483,7 +483,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(), e);
         }
         return towns;
     }
